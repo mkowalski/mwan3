@@ -379,6 +379,8 @@ function populate_connected_set() {
 
 	if (family_num == AF_INET)
 		push(elements, "224.0.0.0/3");
+	else
+		push(elements, "fe80::/10", "ff00::/8");
 
 	sort(elements);
 	let fingerprint = join(",", elements);

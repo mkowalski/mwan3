@@ -987,7 +987,7 @@ The binary has no dependencies beyond libc (`inet_pton`, `strtol`, and standard 
 | Function | Purpose |
 |---|---|
 | `mwan3_set_connected_ipv4` | Flushes and repopulates `mwan3_connected_v4` from main routing table. Adds `224.0.0.0/3` for multicast. Self-contained: starts and commits its own nft batch. |
-| `mwan3_set_connected_ipv6` | Same for IPv6. Skips if `$NO_IPV6`. Self-contained batch. |
+| `mwan3_set_connected_ipv6` | Same for IPv6. Adds `fe80::/10` and `ff00::/8` for link-local and multicast. Skips if `$NO_IPV6`. Self-contained batch. |
 | `mwan3_set_connected_sets` | Calls both `_ipv4` and `_ipv6` functions. |
 | `mwan3_set_custom_set table_id` | Callback for `config_list_foreach`. Adds routes from the given table to custom sets. Pushes to an existing batch (does not start/commit). |
 | `mwan3_set_custom_sets` | Flushes and repopulates custom sets from all `rt_table_lookup` entries in globals config. |

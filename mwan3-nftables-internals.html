@@ -851,7 +851,7 @@ mwan3-lb-test cleanup</code></pre>
 <table>
 <thead><tr><th>Function</th><th>Purpose</th></tr></thead><tbody>
 <tr><td><code>mwan3_set_connected_ipv4</code></td><td>Flushes and repopulates <code>mwan3_connected_v4</code> from main routing table. Adds <code>224.0.0.0/3</code> for multicast. Self-contained: starts and commits its own nft batch.</td></tr>
-<tr><td><code>mwan3_set_connected_ipv6</code></td><td>Same for IPv6. Skips if <code>$NO_IPV6</code>. Self-contained batch.</td></tr>
+<tr><td><code>mwan3_set_connected_ipv6</code></td><td>Same for IPv6. Adds <code>fe80::/10</code> and <code>ff00::/8</code> for link-local and multicast. Skips if <code>$NO_IPV6</code>. Self-contained batch.</td></tr>
 <tr><td><code>mwan3_set_connected_sets</code></td><td>Calls both <code>_ipv4</code> and <code>_ipv6</code> functions.</td></tr>
 <tr><td><code>mwan3_set_custom_set table_id</code></td><td>Callback for <code>config_list_foreach</code>. Adds routes from the given table to custom sets. Pushes to an existing batch (does not start/commit).</td></tr>
 <tr><td><code>mwan3_set_custom_sets</code></td><td>Flushes and repopulates custom sets from all <code>rt_table_lookup</code> entries in globals config.</td></tr>

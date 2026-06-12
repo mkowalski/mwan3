@@ -128,13 +128,15 @@ mwan3_set_connected_ipv6()
 
 	[ $NO_IPV6 -eq 0 ] || return
 
-	elements=""
-	for connected_network_v6 in $(${MWAN3_LIST_ROUTES} 6 main); do
-		[ -n "$elements" ] && elements="$elements, "
-		elements="$elements$connected_network_v6"
-	done
+	# Always exempt link-local (fe80::/10) and multicast (ff00::/8)
+	# destinations, mirroring 224.0.0.0/3 in the IPv4 path. Without this,
+	# locally-generated DHCPv6 and ICMPv6 traffic gets fwmarked and routed
+	# via policy tables that lack link-local routes (Network unreachable).
 
-	[ -z "$elements" ] && return
+	elements="fe80::/10, ff00::/8"
+	for connected_network_v6 in $(${MWAN3_LIST_ROUTES} 6 main); do
+		elements="$elements, $connected_network_v6"
+	done
 
 	mwan3_nft_batch_start
 	mwan3_nft_push "flush set inet mwan3 mwan3_connected_v6"
